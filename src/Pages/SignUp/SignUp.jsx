@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import loginImg from "../../assets/images/login/login.svg"
+import signUpImg from "../../assets/images/login/login.svg"
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 
-const Login = () => {
+const SignUp = () => {
 
-    const {signIn} = useContext(AuthContext)
+    const {createUser} = useContext(AuthContext);
 
-    const handleLogin = e =>{
+    const handleSignUp = e =>{
         e.preventDefault();
         
         const form = e.target;
@@ -16,7 +16,7 @@ const Login = () => {
 
         console.log(email, password);
 
-        signIn(email,password)
+        createUser(email,password)
         .then(result => {
             console.log(result.user)
         })
@@ -30,13 +30,19 @@ const Login = () => {
             <div className="hero-content flex-col lg:flex-row w-full">
 
                 <div className="mr-10 w-1/2">
-                    <img src={loginImg} alt="" />
+                    <img src={signUpImg} alt="" />
                 </div>
 
                 <div className="card flex-shrink-0 max-w-md shadow-2xl bg-base-100 w-1/2">
 
-                    <form onSubmit={handleLogin} className="card-body">
-                    <h2 className="text-2xl font-bold text-center">Login</h2>
+                    <form onSubmit={handleSignUp} className="card-body">
+                        <h2 className="text-2xl font-bold text-center">Sign Up</h2>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Name</span>
+                            </label>
+                            <input type="text" name="name" placeholder="Name" className="input input-bordered" required />
+                        </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
@@ -53,9 +59,9 @@ const Login = () => {
                             </label>
                         </div>
                         <div className="form-control mt-6">
-                            <input className="btn btn-warning" type="submit" value="Login" />
+                            <input className="btn btn-warning" type="submit" value="Sign Up" />
                         </div>
-                    <p className="text-center py-3">Have an account? <Link className="text-orange-500 font-bold" to={"/signUp"}>Sign Up</Link> </p>
+                        <p className="text-center py-3">Already have an account? <Link className="text-orange-500 font-bold" to={"/login"}>Log in</Link> </p>
                     </form>
                 </div>
             </div>
@@ -63,4 +69,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
