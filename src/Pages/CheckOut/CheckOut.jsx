@@ -7,7 +7,7 @@ const CheckOut = () => {
 
     const services = useLoaderData();
 
-    const {_id, title, price } = services;
+    const {_id, title, price ,img} = services;
 
     const {user} = useContext(AuthContext);
 
@@ -23,11 +23,12 @@ const CheckOut = () => {
             customerName: name,
             date,
             email,
+            img,
             price: price,
             service: _id
         }
 
-        console.log(order)
+        // console.log(order)
 
         fetch("http://localhost:5000/checkOut",{
             method: "POST",
@@ -38,7 +39,8 @@ const CheckOut = () => {
         })
         .then(res=>res.json())
         .then(data =>{
-            console.log(data)
+            console.log(data);
+            form.reset();
         })
     }
 
