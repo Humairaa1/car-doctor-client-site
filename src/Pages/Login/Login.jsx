@@ -2,44 +2,48 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/images/login/login.svg"
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
-import axios from "axios";
+// import axios from "axios";
 
 const Login = () => {
 
-    const {signIn} = useContext(AuthContext);
+    const { signIn } = useContext(AuthContext);
 
-    const location =useLocation();
+    const location = useLocation();
     const navigate = useNavigate();
 
-    const handleLogin = e =>{
+    const handleLogin = e => {
         e.preventDefault();
-        
+
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
 
         // console.log(email, password);
 
-        signIn(email,password)
-        .then(result => {
-            const loggedInUser = result.user
-            console.log(loggedInUser);
-            
-            const user = {email}
+        signIn(email, password)
+            .then(result => {
+                const loggedInUser = result.user
+                console.log(loggedInUser);
 
-            axios.post("http://localhost:5000/jwt",user,{
-                withCredentials:true
-            })
-            .then(res=>{
-                console.log(res.data)
-                if(res.data.success){
-                    navigate(location?.state ? location.state : "/") 
+                if (result.user) {
+                    navigate(location?.state ? location.state : "/")
                 }
+
+                // const user = {email}
+
+                // axios.post("http://localhost:5000/jwt",user,{
+                //     withCredentials:true
+                // })
+                // .then(res=>{
+                //     console.log(res.data)
+                //     if(res.data.success){
+                //         navigate(location?.state ? location.state : "/") 
+                //     }
+                // })
             })
-        })
-        .catch(err => {
-            console.error(err)
-        })
+            .catch(err => {
+                console.error(err)
+            })
     }
 
     return (
@@ -53,7 +57,7 @@ const Login = () => {
                 <div className="card flex-shrink-0 max-w-md shadow-2xl bg-base-100 w-1/2">
 
                     <form onSubmit={handleLogin} className="card-body">
-                    <h2 className="text-2xl font-bold text-center">Login</h2>
+                        <h2 className="text-2xl font-bold text-center">Login</h2>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
@@ -72,7 +76,7 @@ const Login = () => {
                         <div className="form-control mt-6">
                             <input className="btn btn-warning" type="submit" value="Login" />
                         </div>
-                    <p className="text-center py-3">Have an account? <Link className="text-orange-500 font-bold" to={"/signUp"}>Sign Up</Link> </p>
+                        <p className="text-center py-3">Have an account? <Link className="text-orange-500 font-bold" to={"/signUp"}>Sign Up</Link> </p>
                     </form>
                 </div>
             </div>
